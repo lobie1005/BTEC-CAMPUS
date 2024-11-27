@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:name=".CampusApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/app_logo"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/app_logo_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Campus"
+        android:enableOnBackInvokedCallback="true">
+
+        <!-- MainActivity is the main activity to launch app -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- LoginActivity is login activity to login user -->
+        <activity
+            android:name=".activities.LoginActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.RegisterActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.BudgetSettingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.NotificationSettingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.NotificationsActivity"
+            android:exported="false" />
+
+    </application>
+
+</manifest>
