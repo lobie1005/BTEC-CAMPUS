@@ -1,35 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/primary_blue"
-            app:title="Reports &amp; Analytics"
+            app:title="Dashboard"
             app:titleTextColor="@color/white" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
+        app:layout_constraintTop_toBottomOf="@id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
+            android:id="@+id/main_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Time Period Selection -->
+            <!-- Total Budget Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,22 +52,36 @@
                     android:padding="16dp">
 
                     <TextView
+                        android:textAllCaps="true"
+                        android:textStyle="bold|italic"
+                        android:id="@+id/tvFullname"
+                        android:textSize="20sp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="NGO KIM LOC" />
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Time Period"
+                        android:text="Balance"
                         android:textColor="@color/primary_blue"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <Spinner
-                        android:id="@+id/spinnerTimePeriod"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/tvBalance"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp" />
+                        android:layout_marginTop="8dp"
+                        android:text="$0.00"
+                        android:textColor="@color/primary_blue"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Expense Summary -->
+            <!-- Monthly Overview Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -74,13 +96,21 @@
                     android:padding="16dp">
 
                     <TextView
+                        android:id="@+id/tvMonthlyOverview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Expense Summary"
+                        android:text="Monthly Overview"
                         android:textColor="@color/primary_blue"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/pieChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="16dp" />
+
+                    <!-- Expense Summary -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -96,16 +126,17 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Total Income"
-                                android:textColor="@color/text_secondary" />
+                                android:text="Total Spent"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="14sp" />
 
                             <TextView
-                                android:id="@+id/tvTotalIncome"
+                                android:id="@+id/tvTotalSpent"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
                                 android:text="$0.00"
-                                android:textColor="@color/success_green"
+                                android:textColor="@color/primary_blue"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -119,16 +150,17 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Total Expenses"
-                                android:textColor="@color/text_secondary" />
+                                android:text="Remaining Budget"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="14sp" />
 
                             <TextView
-                                android:id="@+id/tvTotalExpenses"
+                                android:id="@+id/tvRemainingBudget"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
                                 android:text="$0.00"
-                                android:textColor="@color/error_red"
+                                android:textColor="@color/success_green"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -136,7 +168,7 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Expense Chart -->
+            <!-- Recent Transactions Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -153,104 +185,44 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Expense Breakdown"
+                        android:text="Recent Transactions"
                         android:textColor="@color/primary_blue"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <com.github.mikephil.charting.charts.PieChart
-                        android:id="@+id/pieChartExpenses"
-                        android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        android:layout_marginTop="16dp" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Transaction History -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="4dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Transaction History"
-                        android:textColor="@color/primary_blue"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-<<<<<<< Updated upstream
-                    <Spinner
-                        android:id="@+id/spinnerTimePeriod"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp" />
-
-                    <Spinner
-                        android:id="@+id/spinnerTransactionType"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp" />
-
-                    <Spinner
-                        android:id="@+id/spinnerSortOption"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp" />
-
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvTransactions"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:layout_marginTop="16dp" />
-
-=======
->>>>>>> Stashed changes
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerViewTransactions"
+                        android:id="@+id/rvRecentTransactions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="8dp"
                         android:nestedScrollingEnabled="false" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
-<<<<<<< Updated upstream
-
-            <Spinner
-                android:id="@+id/spinnerTimePeriod"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp" />
-
-            <Spinner
-                android:id="@+id/spinnerTransactionType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp" />
-
-            <Spinner
-                android:id="@+id/spinnerSortOption"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvTransactions"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginTop="16dp" />
-=======
->>>>>>> Stashed changes
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:menu="@menu/bottom_nav_menu"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddExpense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp"
+        android:layout_marginBottom="40dp"
+        android:contentDescription="Add Expense"
+        app:backgroundTint="@color/primary_blue"
+        app:srcCompat="@drawable/ic_add"
+        app:tint="@color/white" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

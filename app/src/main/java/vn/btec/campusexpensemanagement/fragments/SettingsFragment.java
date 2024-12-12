@@ -1,19 +1,31 @@
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/SettingsFragment.java
 package vn.btec.campusexpensemanagement.fragments;
+=======
+package com.btec.fpt.campus_expense_manager.fragments;
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/SettingsFragment.java
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/SettingsFragment.java
 import android.content.SharedPreferences;
+=======
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/SettingsFragment.java
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/SettingsFragment.java
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
+=======
+import android.widget.EditText;
+import android.widget.ImageView;
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/SettingsFragment.java
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,11 +35,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/SettingsFragment.java
 import vn.btec.campusexpensemanagement.LoginActivity;
 import vn.btec.campusexpensemanagement.R;
 import vn.btec.campusexpensemanagement.fragments.*;
 import vn.btec.campusexpensemanagement.database.DatabaseHelper;
 import vn.btec.campusexpensemanagement.entities.User;
+=======
+import com.btec.fpt.campus_expense_manager.R;
+import com.btec.fpt.campus_expense_manager.activities.LoginActivity;
+import com.btec.fpt.campus_expense_manager.database.DatabaseHelper;
+import com.btec.fpt.campus_expense_manager.entities.User;
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/SettingsFragment.java
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.textfield.TextInputEditText;
@@ -48,6 +67,7 @@ public class SettingsFragment extends Fragment {
 
     private DatabaseHelper databaseHelper;
     private String currentUserEmail;
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/SettingsFragment.java
     private Integer currentUserId;
 
     private ActivityResultLauncher<Intent> galleryLauncher;
@@ -58,6 +78,11 @@ public class SettingsFragment extends Fragment {
     private Button btnChangePassword, btnSaveSettings, btnManageCategories;
     private SharedPreferences sharedPreferences;
 
+=======
+
+    private ActivityResultLauncher<Intent> galleryLauncher;
+
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/SettingsFragment.java
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +111,7 @@ public class SettingsFragment extends Fragment {
         setupListeners();
         loadUserProfile();
 
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/SettingsFragment.java
         sharedPreferences = requireContext().getSharedPreferences("settings", requireContext().MODE_PRIVATE);
 
         etCurrentPassword = view.findViewById(R.id.etCurrentPassword);
@@ -100,6 +126,8 @@ public class SettingsFragment extends Fragment {
         loadCurrentSettings();
         setupSettingsListeners();
 
+=======
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/SettingsFragment.java
         return view;
     }
 
@@ -132,7 +160,11 @@ public class SettingsFragment extends Fragment {
         etEmail.setOnClickListener(v -> showChangeEmailDialog());
         
         // Add password change listener
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/SettingsFragment.java
         View passwordChangeView = getView().findViewById(R.id.changePasswd);
+=======
+        View passwordChangeView = getView().findViewById(R.id.layoutChangePassword);
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/SettingsFragment.java
         if (passwordChangeView != null) {
             passwordChangeView.setOnClickListener(v -> showChangePasswordDialog());
         }
@@ -192,7 +224,11 @@ public class SettingsFragment extends Fragment {
         // Set current name as default
         User currentUser = databaseHelper.getUserByEmail(currentUserEmail);
         if (currentUser != null) {
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/SettingsFragment.java
             etNewName.setText(currentUser.getId() + "" + currentUser.getFirstName() + " " + currentUser.getLastName());
+=======
+            etNewName.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/SettingsFragment.java
         }
 
         builder.setPositiveButton("Update", (dialog, which) -> {
@@ -210,7 +246,11 @@ public class SettingsFragment extends Fragment {
 
             // Update user in local database
             boolean updateSuccess = databaseHelper.updateUser(
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/SettingsFragment.java
                 currentUser.getId(),
+=======
+                currentUser.getUserId(), 
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/SettingsFragment.java
                 firstName, 
                 lastName, 
                 currentUserEmail, 
@@ -260,7 +300,11 @@ public class SettingsFragment extends Fragment {
             if (currentUser != null) {
                 // Update user in local database
                 boolean updateSuccess = databaseHelper.updateUser(
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/SettingsFragment.java
                     currentUser.getId(),
+=======
+                    currentUser.getUserId(), 
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/SettingsFragment.java
                     currentUser.getFirstName(), 
                     currentUser.getLastName(), 
                     newEmail, 
@@ -330,6 +374,7 @@ public class SettingsFragment extends Fragment {
 
         builder.create().show();
     }
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/SettingsFragment.java
 
     private void loadCurrentSettings() {
         // Load budget limit
@@ -405,4 +450,6 @@ public class SettingsFragment extends Fragment {
     private void showToast(String message) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
     }
+=======
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/SettingsFragment.java
 }

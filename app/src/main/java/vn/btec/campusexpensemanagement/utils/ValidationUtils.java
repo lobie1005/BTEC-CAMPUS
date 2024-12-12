@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/utils/ValidationUtils.java
 package vn.btec.campusexpensemanagement.utils;
+=======
+package com.btec.fpt.campus_expense_manager.utils;
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/utils/ValidationUtils.java
 
 import android.text.TextUtils;
 
@@ -30,7 +34,11 @@ public class ValidationUtils {
      * @return true if email is valid, false otherwise
      */
     public static boolean isValidEmail(String email) {
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/utils/ValidationUtils.java
         return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+=======
+        return !TextUtils.isEmpty(email) && EMAIL_PATTERN.matcher(email).matches();
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/utils/ValidationUtils.java
     }
 
     /**
@@ -39,7 +47,11 @@ public class ValidationUtils {
      * @return true if password meets complexity requirements, false otherwise
      */
     public static boolean isValidPassword(String password) {
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/utils/ValidationUtils.java
         return !TextUtils.isEmpty(password) && password.length() >= 6;
+=======
+        return !TextUtils.isEmpty(password) && PASSWORD_PATTERN.matcher(password).matches();
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/utils/ValidationUtils.java
     }
 
     /**
@@ -48,7 +60,11 @@ public class ValidationUtils {
      * @return true if description is not empty and within reasonable length
      */
     public static boolean isValidDescription(String description) {
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/utils/ValidationUtils.java
         return !TextUtils.isEmpty(description) && description.length() <= 500;
+=======
+        return !TextUtils.isEmpty(description) && description.length() <= 200;
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/utils/ValidationUtils.java
     }
 
     /**
@@ -56,11 +72,18 @@ public class ValidationUtils {
      * @param amountStr Amount as string
      * @return true if amount is a valid positive number
      */
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/utils/ValidationUtils.java
     public static boolean isValidAmount(String amount) {
         if (TextUtils.isEmpty(amount)) return false;
         try {
             double value = Double.parseDouble(amount);
             return value > 0;
+=======
+    public static boolean isValidAmount(String amountStr) {
+        try {
+            double amount = Double.parseDouble(amountStr);
+            return amount > 0;
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/utils/ValidationUtils.java
         } catch (NumberFormatException e) {
             return false;
         }

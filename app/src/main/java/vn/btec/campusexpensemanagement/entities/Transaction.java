@@ -24,6 +24,7 @@ public class Transaction {
     }
 
     public Transaction() {
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/entities/Transaction.java
         this.id = 0;
         this.userId = 0;
         this.amount = 0.0;
@@ -40,6 +41,17 @@ public class Transaction {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+=======
+        this.id = id;
+        this.amount = amount;
+        this.description = description;
+        this.date = date;
+        this.type = type;
+        this.email = email;
+        this.category = category;
+    }
+
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/entities/Transaction.java
 
     public String getCategory() {
         return category;

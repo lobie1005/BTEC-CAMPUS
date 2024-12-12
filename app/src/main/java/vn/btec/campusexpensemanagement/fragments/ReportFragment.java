@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/ReportFragment.java
 package vn.btec.campusexpensemanagement.fragments;
+=======
+package com.btec.fpt.campus_expense_manager.fragments;
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/ReportFragment.java
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,12 +19,21 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/ReportFragment.java
 import vn.btec.campusexpensemanagement.R;
 import vn.btec.campusexpensemanagement.adapters.TransactionAdapter;
 import vn.btec.campusexpensemanagement.database.DatabaseHelper;
 import vn.btec.campusexpensemanagement.entities.Transaction;
 import vn.btec.campusexpensemanagement.utils.CurrencyUtils;
 import vn.btec.campusexpensemanagement.utils.DateUtils;
+=======
+import com.btec.fpt.campus_expense_manager.R;
+import com.btec.fpt.campus_expense_manager.adapters.TransactionAdapter;
+import com.btec.fpt.campus_expense_manager.database.DatabaseHelper;
+import com.btec.fpt.campus_expense_manager.entities.Transaction;
+import com.btec.fpt.campus_expense_manager.utils.CurrencyUtils;
+import com.btec.fpt.campus_expense_manager.utils.DateUtils;
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/ReportFragment.java
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,6 +50,7 @@ public class ReportFragment extends Fragment {
 
     // Constants for filtering and sorting
     private static final String[] TIME_PERIODS = {
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/ReportFragment.java
             "Current Month", "Last 7 Days", "Last 30 Days",
             "Last 3 Months", "Last 6 Months", "Last Year"
     };
@@ -45,12 +59,26 @@ public class ReportFragment extends Fragment {
             "Date (New to Old)", "Date (Old to New)",
             "Amount (High to Low)", "Amount (Low to High)",
             "Alphabetical (A-Z)", "Alphabetical (Z-A)"
+=======
+        "Current Month", "Last 7 Days", "Last 30 Days", 
+        "Last 3 Months", "Last 6 Months", "Last Year"
+    };
+    private static final String[] TRANSACTION_TYPES = {"All", "Income", "Expense"};
+    private static final String[] SORT_OPTIONS = {
+        "Date (New to Old)", "Date (Old to New)", 
+        "Amount (High to Low)", "Amount (Low to High)", 
+        "Alphabetical (A-Z)", "Alphabetical (Z-A)"
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/ReportFragment.java
     };
 
     @Nullable
     @Override
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/ReportFragment.java
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+=======
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/ReportFragment.java
         View view = inflater.inflate(R.layout.fragment_report, container, false);
         initializeComponents(view);
         setupSpinners();
@@ -60,7 +88,11 @@ public class ReportFragment extends Fragment {
 
     private void initializeComponents(View view) {
         databaseHelper = new DatabaseHelper(requireContext());
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/ReportFragment.java
 
+=======
+        
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/ReportFragment.java
         // Initialize UI components
         tvTotalIncome = view.findViewById(R.id.tvTotalIncome);
         tvTotalExpense = view.findViewById(R.id.tvTotalExpense);
@@ -89,8 +121,12 @@ public class ReportFragment extends Fragment {
             }
 
             @Override
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/ReportFragment.java
             public void onNothingSelected(AdapterView<?> parent) {
             }
+=======
+            public void onNothingSelected(AdapterView<?> parent) {}
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/ReportFragment.java
         };
 
         spinnerTimePeriod.setOnItemSelectedListener(filterListener);
@@ -100,15 +136,23 @@ public class ReportFragment extends Fragment {
 
     private void setupSpinner(Spinner spinner, String[] items) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/ReportFragment.java
                 requireContext(),
                 android.R.layout.simple_spinner_item,
                 items);
+=======
+            requireContext(), 
+            android.R.layout.simple_spinner_item, 
+            items
+        );
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/ReportFragment.java
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }
 
     private void loadInitialTransactions() {
         String email = databaseHelper.getCurrentUserEmail();
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/ReportFragment.java
         String selectedType = spinnerTransactionType.getSelectedItem() != null
                 ? spinnerTransactionType.getSelectedItem().toString()
                 : "";
@@ -119,22 +163,33 @@ public class ReportFragment extends Fragment {
         }
 
         transactions = databaseHelper.getCurrentMonthTransactions(email, selectedType);
+=======
+        transactions = databaseHelper.getCurrentMonthTransactions(email, null);
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/ReportFragment.java
         updateTransactionList();
         updateTransactionSummary();
     }
 
     private void filterTransactions() {
         String email = databaseHelper.getCurrentUserEmail();
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/ReportFragment.java
 
         // Determine time period
         long[] timePeriod = getSelectedTimePeriod();
 
+=======
+        
+        // Determine time period
+        long[] timePeriod = getSelectedTimePeriod();
+        
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/ReportFragment.java
         // Determine transaction type
         String transactionType = getSelectedTransactionType();
 
         // Determine sort option
         DatabaseHelper.TransactionSortOption sortOption = getSelectedSortOption();
 
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/ReportFragment.java
         transactions = databaseHelper.getTransactionsWithFilter(
                 email,
                 null, // Assuming type filter is not used here
@@ -144,6 +199,15 @@ public class ReportFragment extends Fragment {
                 null, // Assuming minAmount filter is not used here
                 null, // Assuming maxAmount filter is not used here
                 sortOption
+=======
+        // Get filtered transactions
+        transactions = databaseHelper.getTransactionsWithFilter(
+            email, 
+            timePeriod[0], 
+            timePeriod[1], 
+            transactionType, 
+            sortOption
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/ReportFragment.java
         );
 
         updateTransactionList();
@@ -196,7 +260,11 @@ public class ReportFragment extends Fragment {
             case 2: // Expense
                 return "Expense";
             default:
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/ReportFragment.java
                 return ""; // Return empty string for "All"
+=======
+                return null;
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/ReportFragment.java
         }
     }
 
@@ -225,6 +293,7 @@ public class ReportFragment extends Fragment {
 
     private void updateTransactionSummary() {
         double totalIncome = transactions.stream()
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/ReportFragment.java
                 .filter(t -> t.getType() == 1)
                 .mapToDouble(Transaction::getAmount)
                 .sum();
@@ -233,6 +302,16 @@ public class ReportFragment extends Fragment {
                 .filter(t -> t.getType() == 2)
                 .mapToDouble(Transaction::getAmount)
                 .sum();
+=======
+            .filter(t -> t.getType() == 1)
+            .mapToDouble(Transaction::getAmount)
+            .sum();
+
+        double totalExpense = transactions.stream()
+            .filter(t -> t.getType() == 0)
+            .mapToDouble(Transaction::getAmount)
+            .sum();
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/ReportFragment.java
 
         // Use Vietnamese locale for currency formatting
         tvTotalIncome.setText(CurrencyUtils.formatCurrency(totalIncome, new Locale("vi", "VN")));
@@ -241,6 +320,7 @@ public class ReportFragment extends Fragment {
 
     // Method to receive data from Dashboard Fragment
     public void setInitialFilter(String transactionType) {
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/ReportFragment.java
         int typePosition;
         if (transactionType.equals("Income")) {
             typePosition = 1;
@@ -250,6 +330,14 @@ public class ReportFragment extends Fragment {
             typePosition = 0; // All
         }
 
+=======
+        int typePosition = switch (transactionType) {
+            case "Income" -> 1;
+            case "Expense" -> 2;
+            default -> 0;
+        };
+        
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/ReportFragment.java
         spinnerTransactionType.setSelection(typePosition);
         filterTransactions();
     }

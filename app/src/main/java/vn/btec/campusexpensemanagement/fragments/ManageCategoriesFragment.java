@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/ManageCategoriesFragment.java
 package vn.btec.campusexpensemanagement.fragments;
+=======
+package com.btec.fpt.campus_expense_manager.fragments;
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/ManageCategoriesFragment.java
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -14,10 +18,17 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/ManageCategoriesFragment.java
 import vn.btec.campusexpensemanagement.R;
 import vn.btec.campusexpensemanagement.adapters.CategoryAdapter;
 import vn.btec.campusexpensemanagement.database.DatabaseHelper;
 import vn.btec.campusexpensemanagement.entities.Category;
+=======
+import com.btec.fpt.campus_expense_manager.R;
+import com.btec.fpt.campus_expense_manager.adapters.CategoryAdapter;
+import com.btec.fpt.campus_expense_manager.database.DatabaseHelper;
+import com.btec.fpt.campus_expense_manager.entities.Category;
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/ManageCategoriesFragment.java
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -77,6 +88,7 @@ public class ManageCategoriesFragment extends Fragment implements CategoryAdapte
 
             if (!categoryName.isEmpty() && !categoryType.isEmpty()) {
                 // Insert category
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/ManageCategoriesFragment.java
                 try {
                     boolean result = databaseHelper.insertCategory(
                         categoryName, 
@@ -95,6 +107,21 @@ public class ManageCategoriesFragment extends Fragment implements CategoryAdapte
                 }
             } else {
                 Toast.makeText(requireContext(), "Category name and type cannot be empty", Toast.LENGTH_SHORT).show();
+=======
+                long result = databaseHelper.insertCategory(
+                    categoryName, 
+                    databaseHelper.getCurrentUserEmail()
+                );
+
+                if (result != -1) {
+                    setupRecyclerView(); // Refresh the list
+                    Toast.makeText(requireContext(), "Category added successfully", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(requireContext(), "Failed to add category", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(requireContext(), "Category name cannot be empty", Toast.LENGTH_SHORT).show();
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/ManageCategoriesFragment.java
             }
         });
 
@@ -113,6 +140,7 @@ public class ManageCategoriesFragment extends Fragment implements CategoryAdapte
             .setTitle("Delete Category")
             .setMessage("Are you sure you want to delete this category?")
             .setPositiveButton("Delete", (dialog, which) -> {
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/ManageCategoriesFragment.java
                 try {
                     boolean result = databaseHelper.deleteCategory(category.getCateId());
                     if (result) {
@@ -123,6 +151,14 @@ public class ManageCategoriesFragment extends Fragment implements CategoryAdapte
                     }
                 } catch (Exception e) {
                     Toast.makeText(requireContext(), "Error deleting category: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+=======
+                int result = databaseHelper.deleteCategory(category.getCategoryId());
+                if (result > 0) {
+                    setupRecyclerView(); // Refresh the list
+                    Toast.makeText(requireContext(), "Category deleted", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(requireContext(), "Failed to delete category", Toast.LENGTH_SHORT).show();
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/ManageCategoriesFragment.java
                 }
             })
             .setNegativeButton("Cancel", null)
@@ -139,11 +175,15 @@ public class ManageCategoriesFragment extends Fragment implements CategoryAdapte
 
         // Pre-fill existing category details
         etCategoryName.setText(category.getName());
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/ManageCategoriesFragment.java
         etCategoryType.setText(category.getType());
+=======
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/ManageCategoriesFragment.java
 
         builder.setView(dialogView);
         builder.setPositiveButton("Update", (dialog, which) -> {
             String newCategoryName = etCategoryName.getText().toString().trim();
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/ManageCategoriesFragment.java
             String newCategoryType = etCategoryType.getText().toString().trim();
 
             if (!newCategoryName.isEmpty() && !newCategoryType.isEmpty()) {
@@ -167,6 +207,25 @@ public class ManageCategoriesFragment extends Fragment implements CategoryAdapte
                 }
             } else {
                 Toast.makeText(requireContext(), "Category name and type cannot be empty", Toast.LENGTH_SHORT).show();
+=======
+
+            if (!newCategoryName.isEmpty()) {
+                // Update category
+                int result = databaseHelper.updateCategory(
+                    category.getCategoryId(), 
+                    newCategoryName, 
+                    databaseHelper.getCurrentUserEmail()
+                );
+
+                if (result > 0) {
+                    setupRecyclerView(); // Refresh the list
+                    Toast.makeText(requireContext(), "Category updated successfully", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(requireContext(), "Failed to update category", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(requireContext(), "Category name cannot be empty", Toast.LENGTH_SHORT).show();
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/ManageCategoriesFragment.java
             }
         });
 

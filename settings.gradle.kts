@@ -17,13 +17,21 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+<<<<<<< Updated upstream
         maven("https://jitpack.io") // Ensure JitPack is included
+=======
+        maven("https://jitpack.io") // JitPack repository
+>>>>>>> Stashed changes
     }
 }
 
 rootProject.name = "Campus_Expense_Manager"
+<<<<<<< Updated upstream
 include(":app")
 
 rootProject.name = "Campus Expense Management"
 include(":app")
  
+=======
+include(":app")
+>>>>>>> Stashed changes
