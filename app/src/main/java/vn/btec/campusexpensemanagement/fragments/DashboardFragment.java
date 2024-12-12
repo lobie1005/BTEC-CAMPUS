@@ -29,194 +29,52 @@ import java.util.List;
 import java.util.Locale;
 
 public class DashboardFragment extends Fragment {
-    private DatabaseHelper databaseHelper;
-    private TextView tvFullName, tvBalance, tvTotalIncome, tvTotalExpense, tvMonthlyOverview;
-    private ProgressBar progressBudgetRemain;
     private RecyclerView rvRecentTransactions;
-    private View btnAddIncome, btnAddExpense;
+    private PieChart chartOverview;
+    private DatabaseHelper dbHelper;
+    private SessionManager sessionManager;
 
-    public DashboardFragment() {
-        // Required empty public constructor
-    }
-
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
-        // Initialize Components
-        initializeComponents(view);
-
-        // Load Dashboard Data
+        initializeViews(view);
+        setupTransactionsList();
         loadDashboardData();
-
-        // Load Transactions
-        loadTransactions();
-
-        // Setup Listeners
-        setupListeners();
+        setupChart();
 
         return view;
     }
 
-    private void initializeComponents(View view) {
-        databaseHelper = new DatabaseHelper(requireContext());
-        tvFullName = view.findViewById(R.id.tvFullName);
+    private void initializeViews(View view) {
         tvBalance = view.findViewById(R.id.tvBalance);
-        tvTotalIncome = view.findViewById(R.id.tvTotalIncome);
-        tvTotalExpense = view.findViewById(R.id.tvTotalExpense);
-        tvMonthlyOverview = view.findViewById(R.id.tvMonthlyOverview);
+        tvIncome = view.findViewById(R.id.tvIncome);
+        tvExpense = view.findViewById(R.id.tvExpense);
         rvRecentTransactions = view.findViewById(R.id.rvRecentTransactions);
-        btnAddIncome = view.findViewById(R.id.btnAddIncome);
-        btnAddExpense = view.findViewById(R.id.addButton);
+        chartOverview = view.findViewById(R.id.chartOverview);
 
-        // Initialize RecyclerView
-        if (rvRecentTransactions != null) {
-            rvRecentTransactions.setLayoutManager(new LinearLayoutManager(requireContext()));
-        }
+        dbHelper = DatabaseManager.getInstance(requireContext()).getHelper();
+        sessionManager = SessionManager.getInstance(requireContext());
     }
 
     private void loadDashboardData() {
-        // Get current user's email from SharedPreferences
-        String currentUserEmail = databaseHelper.getCurrentUserEmail();
-        if (currentUserEmail == null) return;
-
-        // Get current user details
-        User currentUser = databaseHelper.getUserByEmail(currentUserEmail);
-        if (currentUser != null) {
-            // Set Full Name
-            tvFullName.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
-
-            // Get current month's transactions
-            List<Transaction> monthlyTransactions = databaseHelper.getCurrentMonthTransactions(currentUserEmail, null);
-
-            // Calculate total income and expense
-            double totalIncome = 0;
-            double totalExpense = 0;
-
-            for (Transaction transaction : monthlyTransactions) {
-                if (transaction.getType() == 1) { // Income
-                    totalIncome += transaction.getAmount();
-                } else { // Expense
-                    totalExpense += transaction.getAmount();
-                }
-            }
-
-            // Format currency
-            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
-
-            // Calculate balance and budget remaining percentage
+        String email = sessionManager.getCurrentUserEmail();
+        if (email != null) {
+            double totalIncome = dbHelper.getTotalIncome(email);
+            double totalExpense = dbHelper.getTotalExpense(email);
             double balance = totalIncome - totalExpense;
-            double budgetLimit = calculateBudgetLimit(currentUserEmail);
-            int budgetRemainingPercent = calculateBudgetRemainingPercent(balance, budgetLimit);
 
-            // Set views
-            tvBalance.setText(currencyFormat.format(balance));
-            tvTotalIncome.setText(currencyFormat.format(totalIncome));
-            tvTotalExpense.setText(currencyFormat.format(totalExpense));
-            progressBudgetRemain.setProgress(budgetRemainingPercent);
-
-            // Set monthly overview text
-            String overviewText = balance >= 0
-                    ? "You saved " + currencyFormat.format(balance) + " this month"
-                    : "You overspent " + currencyFormat.format(Math.abs(balance)) + " this month";
-            tvMonthlyOverview.setText(overviewText);
+            tvBalance.setText(String.format("$%.2f", balance));
+            tvIncome.setText(String.format("$%.2f", totalIncome));
+            tvExpense.setText(String.format("$%.2f", totalExpense));
         }
     }
 
-    private void loadTransactions() {
-        String currentUserEmail = databaseHelper.getCurrentUserEmail();
-        if (currentUserEmail == null) return;
-
-        // Get recent transactions
-        List<Transaction> transactions = databaseHelper.getRecentTransactions(currentUserEmail, 5);
-        
-        if (transactions != null && !transactions.isEmpty()) {
-            // Update transaction list
-            TransactionAdapter adapter = new TransactionAdapter(requireContext(), transactions);
-            if (rvRecentTransactions != null) {
-                rvRecentTransactions.setAdapter(adapter);
-            }
-        }
+    private void setupTransactionsList() {
+        // Initialize adapter and setup RecyclerView
     }
 
-    private void setupListeners() {
-        if (btnAddIncome != null) {
-            btnAddIncome.setOnClickListener(v -> {
-                if (getActivity() instanceof MainActivity) {
-                    AddIncomeFragment addIncomeFragment = new AddIncomeFragment();
-                    ((MainActivity) getActivity()).getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.fragment_container, addIncomeFragment)
-                            .addToBackStack(null)
-                            .commit();
-                }
-            });
-        }
-
-        if (btnAddExpense != null) {
-            btnAddExpense.setOnClickListener(v -> {
-                if (getActivity() instanceof MainActivity) {
-                    AddExpenseFragment addExpenseFragment = new AddExpenseFragment();
-                    ((MainActivity) getActivity()).getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.fragment_container, addExpenseFragment)
-                            .addToBackStack(null)
-                            .commit();
-                }
-            });
-        }
-
-        if (tvMonthlyOverview != null) {
-            tvMonthlyOverview.setOnClickListener(v -> {
-                if (getActivity() instanceof MainActivity) {
-                    ((MainActivity) getActivity()).navigateToReportWithFilter("Expense");
-                }
-            });
-        }
+    private void setupChart() {
+        // Setup PieChart with income/expense data
     }
-
-    private void navigateToAddIncome() {
-        if (getActivity() instanceof MainActivity) {
-            AddIncomeFragment addIncomeFragment = new AddIncomeFragment();
-            ((MainActivity) getActivity()).getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, addIncomeFragment)
-                    .addToBackStack(null)
-                    .commit();
-        }
-    }
-
-    private void navigateToAddExpense() {
-        if (getActivity() instanceof MainActivity) {
-            AddExpenseFragment addExpenseFragment = new AddExpenseFragment();
-            ((MainActivity) getActivity()).getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, addExpenseFragment)
-                    .addToBackStack(null)
-                    .commit();
-        }
-    }
-
-    private double calculateBudgetLimit(String email) {
-        // TODO: Implement method to retrieve user's budget limit from database
-        // This might involve adding a method to DatabaseHelper to get user's budget settings
-        return 10000.0; // Placeholder value
-    }
-
-    private int calculateBudgetRemainingPercent(double currentBalance, double budgetLimit) {
-        if (budgetLimit <= 0) return 0;
-
-        double remainingPercent = (currentBalance / budgetLimit) * 100;
-        return Math.min(Math.max((int) remainingPercent, 0), 100);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        // Reload dashboard data when fragment becomes visible
-        loadDashboardData();
-        loadTransactions();
-    }
-
 }

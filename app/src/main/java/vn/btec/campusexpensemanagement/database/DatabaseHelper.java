@@ -29,8 +29,8 @@ import java.util.UUID;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "ExpenseDB";
-    private static final int DATABASE_VERSION = 8;
+    private static final String DATABASE_NAME = "campus_expense.db";
+    private static final int DATABASE_VERSION = 3;
 
     // Transactions table
     private static final String TABLE_TRANSACTION = "transactions";
@@ -40,13 +40,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_DATE = "date";
     private static final String COLUMN_TYPE = "type";
     private static final String COLUMN_CATEGORY = "category";
-    private static final String COLUMN_EMAIL = "email";
+    private static final String COLUMN_USER_ID = "user_id";
 
     // User table
-    private static final String TABLE_USER = "USER";
-    private static final String COLUMN_USER_ID = "user_id";
-    private static final String COLUMN_FIRST_NAME = "firstName";
-    private static final String COLUMN_LAST_NAME = "lastName";
+    private static final String TABLE_USER = "users";
+    private static final String COLUMN_FIRST_NAME = "first_name";
+    private static final String COLUMN_LAST_NAME = "last_name";
+    private static final String COLUMN_EMAIL = "email";
     private static final String COLUMN_PASSWORD = "password";
 
     // Category table
@@ -77,13 +77,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Create transactions table
         String CREATE_TRANSACTION_TABLE = "CREATE TABLE " + TABLE_TRANSACTION + "("
                 + COLUMN_TRANSACTION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COLUMN_USER_ID + " INTEGER, "
                 + COLUMN_AMOUNT + " REAL, "
                 + COLUMN_DESCRIPTION + " TEXT, "
                 + COLUMN_DATE + " TEXT,"
                 + COLUMN_TYPE + " INTEGER,"
-                + COLUMN_EMAIL + " TEXT," +
-                COLUMN_CATEGORY + " TEXT" +
-
+                + COLUMN_CATEGORY + " TEXT, "
+                + "FOREIGN KEY(" + COLUMN_USER_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_TRANSACTION_ID + ")" +
                 ")";
         db.execSQL(CREATE_TRANSACTION_TABLE);
 
@@ -122,11 +122,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TRANSACTION);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_GOALS);
-        onCreate(db);
+        if (oldVersion < 2) {
+            // Add user_id column to transactions
+            db.execSQL("ALTER TABLE " + TABLE_TRANSACTION + 
+                      " ADD COLUMN " + COLUMN_USER_ID + " INTEGER");
+        }
+        if (oldVersion < 3) {
+            // Add any new upgrades
+        }
     }
 
     // Insert a new transaction record
@@ -139,7 +142,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_DESCRIPTION, description);
         values.put(COLUMN_DATE, date);
         values.put(COLUMN_TYPE, type);
-        values.put(COLUMN_EMAIL, email);
+        values.put(COLUMN_USER_ID, getUserId(email));
         values.put(COLUMN_CATEGORY, category);
 
         return db.insert(TABLE_TRANSACTION, null, values);
@@ -163,7 +166,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_DESCRIPTION, description);
         values.put(COLUMN_DATE, date);
         values.put(COLUMN_TYPE, type);
-        values.put(COLUMN_EMAIL, email);
+        values.put(COLUMN_USER_ID, getUserId(email));
         values.put(COLUMN_CATEGORY, category);
 
         int rowsAffected = db.update(TABLE_TRANSACTION, values, COLUMN_TRANSACTION_ID + " = ?",
@@ -181,6 +184,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Insert a new user record
+    public long addUser(User user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_FIRST_NAME, user.getFirstName());
+        values.put(COLUMN_LAST_NAME, user.getLastName());
+        values.put(COLUMN_EMAIL, user.getEmail());
+        values.put(COLUMN_PASSWORD, user.getPassword());
+        return db.insert(TABLE_USER, null, values);
+    }
+
     public boolean insertUser(String firstName, String lastName, String email, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -335,11 +348,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 @SuppressLint("Range")
                 int type = cursor.getInt(cursor.getColumnIndex(COLUMN_TYPE));
                 @SuppressLint("Range")
-                String email = cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL));
+                int userId = cursor.getInt(cursor.getColumnIndex(COLUMN_USER_ID));
                 @SuppressLint("Range")
                 String category = cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY));
 
-                Transaction transaction = new Transaction(id, amount, description, date, type, email, category);
+                Transaction transaction = new Transaction(id, amount, description, date, type, getUserEmailById(userId), category);
                 transactionList.add(transaction);
             } while (cursor.moveToNext());
         }
@@ -353,8 +366,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         List<Transaction> transactionList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT * FROM " + TABLE_TRANSACTION + " WHERE " + COLUMN_EMAIL + " = ?";
-        Cursor cursor = db.rawQuery(query, new String[]{email});
+        String query = "SELECT * FROM " + TABLE_TRANSACTION + " WHERE " + COLUMN_USER_ID + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(getUserId(email))});
 
         if (cursor.moveToFirst()) {
             do {
@@ -369,11 +382,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 @SuppressLint("Range")
                 int type = cursor.getInt(cursor.getColumnIndex(COLUMN_TYPE));
                 @SuppressLint("Range")
-                String email2 = cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL));
+                int userId = cursor.getInt(cursor.getColumnIndex(COLUMN_USER_ID));
                 @SuppressLint("Range")
                 String category = cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY));
 
-                Transaction transaction = new Transaction(id, amount, description, date, type, email2, category);
+                Transaction transaction = new Transaction(id, amount, description, date, type, getUserEmailById(userId), category);
                 transactionList.add(transaction);
             } while (cursor.moveToNext());
         }
@@ -386,8 +399,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public User getUserByEmail(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
         User user = null;
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_USER + " WHERE " + COLUMN_EMAIL + " = ?",
-                new String[]{email});
+        Cursor cursor = db.query(TABLE_USER, null, 
+            COLUMN_EMAIL + " = ?", new String[]{email}, null, null, null);
 
         if (cursor.moveToFirst()) {
             // Extract user details from the cursor
@@ -690,7 +703,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query = "SELECT * FROM " + TABLE_TRANSACTION +
-                " WHERE " + COLUMN_EMAIL + " = ? " +
+                " WHERE " + COLUMN_USER_ID + " = ? " +
                 " AND strftime('%s', " + COLUMN_DATE + ") BETWEEN ? AND ?";
 
         // Convert milliseconds to formatted date strings
@@ -698,7 +711,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String startDateStr = dateFormat.format(new Date(startDate));
         String endDateStr = dateFormat.format(new Date(endDate));
 
-        Cursor cursor = db.rawQuery(query, new String[]{email, startDateStr, endDateStr});
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(getUserId(email)), startDateStr, endDateStr});
 
         if (cursor.moveToFirst()) {
             do {
@@ -713,11 +726,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 @SuppressLint("Range")
                 int type = cursor.getInt(cursor.getColumnIndex(COLUMN_TYPE));
                 @SuppressLint("Range")
-                String email2 = cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL));
+                int userId = cursor.getInt(cursor.getColumnIndex(COLUMN_USER_ID));
                 @SuppressLint("Range")
                 String category = cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY));
 
-                Transaction transaction = new Transaction(id, amount, description, date, type, email2, category);
+                Transaction transaction = new Transaction(id, amount, description, date, type, getUserEmailById(userId), category);
                 transactionList.add(transaction);
             } while (cursor.moveToNext());
         }
@@ -797,8 +810,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String baseQuery = "SELECT * FROM " + TABLE_TRANSACTION + " WHERE ";
 
         // Add email condition
-        whereConditions.add(COLUMN_EMAIL + " = ?");
-        whereArgs.add(email);
+        whereConditions.add(COLUMN_USER_ID + " = ?");
+        whereArgs.add(String.valueOf(getUserId(email)));
 
         // Add type condition if specified
         if (type != null) {
@@ -871,7 +884,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 transaction.setDate(cursor.getString(cursor.getColumnIndex(COLUMN_DATE)));
                 transaction.setType(cursor.getInt(cursor.getColumnIndex(COLUMN_TYPE)));
                 transaction.setCategory(cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY)));
-                transaction.setEmail(cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL)));
+                transaction.setEmail(getUserEmailById(cursor.getInt(cursor.getColumnIndex(COLUMN_USER_ID))));
                 transactions.add(transaction);
             } while (cursor.moveToNext());
         }
@@ -895,9 +908,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         List<Transaction> filteredTransactions = new ArrayList<>();
 
         // Base query
-        String query = "SELECT * FROM " + TABLE_TRANSACTION + " WHERE " + COLUMN_EMAIL + " = ?";
+        String query = "SELECT * FROM " + TABLE_TRANSACTION + " WHERE " + COLUMN_USER_ID + " = ?";
         List<String> selectionArgs = new ArrayList<>();
-        selectionArgs.add(email);
+        selectionArgs.add(String.valueOf(getUserId(email)));
 
         // Date range filter
         if (startDate != null && endDate != null) {
@@ -959,7 +972,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 int dateIndex = cursor.getColumnIndex(COLUMN_DATE);
                 int typeIndex = cursor.getColumnIndex(COLUMN_TYPE);
                 int categoryIndex = cursor.getColumnIndex(COLUMN_CATEGORY);
-                int emailIndex = cursor.getColumnIndex(COLUMN_EMAIL);
+                int userIdIndex = cursor.getColumnIndex(COLUMN_USER_ID);
 
                 if (idIndex != -1)
                     transaction.setId(cursor.getInt(idIndex));
@@ -973,8 +986,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     transaction.setType(cursor.getInt(typeIndex));
                 if (categoryIndex != -1)
                     transaction.setCategory(cursor.getString(categoryIndex));
-                if (emailIndex != -1)
-                    transaction.setEmail(cursor.getString(emailIndex));
+                if (userIdIndex != -1)
+                    transaction.setEmail(getUserEmailById(cursor.getInt(userIdIndex)));
 
                 filteredTransactions.add(transaction);
             } while (cursor.moveToNext());
@@ -995,10 +1008,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "SUM(CASE WHEN " + COLUMN_TYPE + " = 1 THEN " + COLUMN_AMOUNT + " ELSE 0 END) as total_income, " +
                 "SUM(CASE WHEN " + COLUMN_TYPE + " = 2 THEN " + COLUMN_AMOUNT + " ELSE 0 END) as total_expense, " +
                 "COUNT(*) as total_transactions " +
-                "FROM " + TABLE_TRANSACTION + " WHERE " + COLUMN_EMAIL + " = ?";
+                "FROM " + TABLE_TRANSACTION + " WHERE " + COLUMN_USER_ID + " = ?";
 
         List<String> selectionArgs = new ArrayList<>();
-        selectionArgs.add(email);
+        selectionArgs.add(String.valueOf(getUserId(email)));
 
         if (startDate != null && endDate != null) {
             baseQuery += " AND " + COLUMN_DATE + " BETWEEN ? AND ?";
@@ -1050,6 +1063,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return -1;
     }
 
+    public String getUserEmailById(int userId) {
+        if (userId <= 0) {
+            return null;
+        }
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {COLUMN_EMAIL};
+        String selection = COLUMN_USER_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(userId)};
+
+        try (Cursor cursor = db.query(TABLE_USER, columns, selection, selectionArgs, null, null, null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                return cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     // Transaction summary class
     public static class TransactionSummary {
         public double totalIncome;
@@ -1084,11 +1117,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query = "SELECT * FROM " + TABLE_TRANSACTION +
-                " WHERE " + COLUMN_EMAIL + " = ?" +
+                " WHERE " + COLUMN_USER_ID + " = ?" +
                 " ORDER BY " + COLUMN_DATE + " DESC" +
                 " LIMIT " + limit;
 
-        Cursor cursor = db.rawQuery(query, new String[]{email});
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(getUserId(email))});
 
         if (cursor.moveToFirst()) {
             do {
@@ -1099,7 +1132,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 transaction.setDate(cursor.getString(cursor.getColumnIndex(COLUMN_DATE)));
                 transaction.setType(cursor.getInt(cursor.getColumnIndex(COLUMN_TYPE)));
                 transaction.setCategory(cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY)));
-                transaction.setEmail(cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL)));
+                transaction.setEmail(getUserEmailById(cursor.getInt(cursor.getColumnIndex(COLUMN_USER_ID))));
                 transactions.add(transaction);
             } while (cursor.moveToNext());
         }
@@ -1112,9 +1145,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         double total = 0;
 
         String query = "SELECT SUM(" + COLUMN_AMOUNT + ") FROM " + TABLE_TRANSACTION +
-                " WHERE " + COLUMN_EMAIL + " = ? AND " + COLUMN_TYPE + " = 1";
+                " WHERE " + COLUMN_USER_ID + " = ? AND " + COLUMN_TYPE + " = 1";
 
-        Cursor cursor = db.rawQuery(query, new String[]{email});
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(getUserId(email))});
 
         if (cursor.moveToFirst()) {
             total = cursor.getDouble(0);
@@ -1128,9 +1161,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         double total = 0;
 
         String query = "SELECT SUM(" + COLUMN_AMOUNT + ") FROM " + TABLE_TRANSACTION +
-                " WHERE " + COLUMN_EMAIL + " = ? AND " + COLUMN_TYPE + " = 2";
+                " WHERE " + COLUMN_USER_ID + " = ? AND " + COLUMN_TYPE + " = 2";
 
-        Cursor cursor = db.rawQuery(query, new String[]{email});
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(getUserId(email))});
 
         if (cursor.moveToFirst()) {
             total = cursor.getDouble(0);

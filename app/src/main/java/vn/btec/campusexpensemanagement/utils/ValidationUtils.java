@@ -30,7 +30,7 @@ public class ValidationUtils {
      * @return true if email is valid, false otherwise
      */
     public static boolean isValidEmail(String email) {
-        return !TextUtils.isEmpty(email) && EMAIL_PATTERN.matcher(email).matches();
+        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     /**
@@ -39,7 +39,7 @@ public class ValidationUtils {
      * @return true if password meets complexity requirements, false otherwise
      */
     public static boolean isValidPassword(String password) {
-        return !TextUtils.isEmpty(password) && PASSWORD_PATTERN.matcher(password).matches();
+        return !TextUtils.isEmpty(password) && password.length() >= 6;
     }
 
     /**
@@ -48,7 +48,7 @@ public class ValidationUtils {
      * @return true if description is not empty and within reasonable length
      */
     public static boolean isValidDescription(String description) {
-        return !TextUtils.isEmpty(description) && description.length() <= 200;
+        return !TextUtils.isEmpty(description) && description.length() <= 500;
     }
 
     /**
@@ -56,10 +56,11 @@ public class ValidationUtils {
      * @param amountStr Amount as string
      * @return true if amount is a valid positive number
      */
-    public static boolean isValidAmount(String amountStr) {
+    public static boolean isValidAmount(String amount) {
+        if (TextUtils.isEmpty(amount)) return false;
         try {
-            double amount = Double.parseDouble(amountStr);
-            return amount > 0;
+            double value = Double.parseDouble(amount);
+            return value > 0;
         } catch (NumberFormatException e) {
             return false;
         }

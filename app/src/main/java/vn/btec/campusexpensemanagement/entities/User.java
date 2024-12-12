@@ -2,14 +2,21 @@ package vn.btec.campusexpensemanagement.entities;
 
 public class User {
 
-
     private int id;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
 
-    // Constructor, getters, and setters
+    // Constructor without ID (for creation)
+    public User(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
+
+    // Constructor with ID (for database retrieval)
     public User(int id, String firstName, String lastName, String email, String password) {
         this.id = id;
         this.firstName = firstName;
