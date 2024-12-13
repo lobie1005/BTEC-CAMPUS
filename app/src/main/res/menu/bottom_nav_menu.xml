@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+<<<<<<< HEAD
         android:id="@+id/nav_dashboard"
         android:icon="@drawable/ic_dashboard"
         android:title="Dashboard" />
@@ -22,6 +23,21 @@
 
     <item
         android:id="@+id/nav_settings"
+=======
+        android:id="@+id/fragment_dashboard"
+        android:icon="@drawable/ic_dashboard"
+        android:title="Dashboard" />
+    <item
+        android:id="@+id/fragment_transactions"
+        android:icon="@drawable/ic_transactions"
+        android:title="Transactions" />
+    <item
+        android:id="@+id/fragment_report"
+        android:icon="@drawable/ic_chart"
+        android:title="Reports" />
+    <item
+        android:id="@+id/fragment_settings"
+>>>>>>> lobi_ver
         android:icon="@drawable/ic_settings"
         android:title="Settings" />
 </menu>

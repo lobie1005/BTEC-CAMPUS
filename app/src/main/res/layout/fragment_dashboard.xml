@@ -214,6 +214,7 @@
                         </LinearLayout>
                     </LinearLayout>
 
+<<<<<<< HEAD
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -245,6 +246,8 @@
 
                     </LinearLayout>
 
+=======
+>>>>>>> lobi_ver
                     <!-- Monthly Overview Text -->
                     <TextView
                         android:id="@+id/tvMonthlyOverview"
@@ -311,5 +314,16 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+<<<<<<< HEAD
 
+=======
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddExpense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/primary_blue"
+        app:srcCompat="@android:drawable/ic_input_add" />
+>>>>>>> lobi_ver
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

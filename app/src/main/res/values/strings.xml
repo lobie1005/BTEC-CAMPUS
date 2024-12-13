@@ -1,4 +1,5 @@
 <resources>
+<<<<<<< HEAD
     <!-- App Name -->
     <string name="app_name">Campus Expense Manager</string>
 
@@ -41,4 +42,7 @@
         <item>Health</item>
         <item>Others</item>
     </string-array>
+=======
+    <string name="app_name">Campus Expense Management</string>
+>>>>>>> lobi_ver
 </resources>

@@ -11,7 +11,10 @@
     <color name="secondary_blue_light">#FFB3E5FC</color>
 
     <color name="text_primary">#FF212121</color>
+<<<<<<< HEAD
     <color name="primary_text">#FF212121</color>
+=======
+>>>>>>> lobi_ver
     <color name="text_secondary">#757575</color>
     <color name="text_tertiary">#FF9E9E9E</color>
     <color name="text_quaternary">#FFBDBDBD</color>
@@ -24,6 +27,7 @@
     <color name="success_green">#FF4CAF50</color>
     <color name="success_green_light">#BDE2C1</color>
     <color name="error_red">#FFD32F2F</color>
+<<<<<<< HEAD
     <color name="expense_red">#F44336</color>
     <color name="error_red_light">#FFEF9A9A</color>
     <color name="warning_yellow">#FFFFC107</color>
@@ -44,4 +48,14 @@
     <color name="gray_light">#E0E0E0</color>
     <color name="gray">#9E9E9E</color>
     <color name="gray_dark">#616161</color>
+=======
+    <color name="error_red_light">#FFEF9A9A</color>
+    <color name="warning_yellow">#FFFFC107</color>
+    <color name="green_income">#00E676</color>
+    <color name="red_expense">#FF1744</color>
+    <color name="colorPrimary">#3D5AFE</color>
+    <color name="colorPrimaryDark">#6E71A8</color>
+
+
+>>>>>>> lobi_ver
 </resources>
