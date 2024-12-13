@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/AddIncomeFragment.java
 package vn.btec.campusexpensemanagement.fragments;
+=======
+package com.btec.fpt.campus_expense_manager.fragments;
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/AddIncomeFragment.java
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -17,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/AddIncomeFragment.java
 import vn.btec.campusexpensemanagement.R;
 import vn.btec.campusexpensemanagement.database.DatabaseHelper;
 import vn.btec.campusexpensemanagement.entities.Transaction;
@@ -25,6 +30,15 @@ import vn.btec.campusexpensemanagement.utils.ValidationUtils;
 
 import java.util.Calendar;
 import java.util.Date;
+=======
+import com.btec.fpt.campus_expense_manager.R;
+import com.btec.fpt.campus_expense_manager.database.DatabaseHelper;
+import com.btec.fpt.campus_expense_manager.entities.Transaction;
+import com.btec.fpt.campus_expense_manager.utils.DateUtils;
+import com.btec.fpt.campus_expense_manager.utils.ValidationUtils;
+
+import java.util.Calendar;
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/AddIncomeFragment.java
 import java.util.Locale;
 
 public class AddIncomeFragment extends Fragment {
@@ -169,7 +183,11 @@ public class AddIncomeFragment extends Fragment {
         transaction.setAmount(amount);
         transaction.setDescription(description);
         transaction.setCategory(category);
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/AddIncomeFragment.java
         transaction.setDate(String.valueOf(timestamp));
+=======
+        transaction.setDate(timestamp);
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/AddIncomeFragment.java
         transaction.setType(Transaction.INCOME_TYPE);
         transaction.setEmail(databaseHelper.getCurrentUserEmail());
 

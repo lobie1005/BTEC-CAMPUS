@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/PlaceholderFragment.java
 package vn.btec.campusexpensemanagement.fragments;
+=======
+package com.btec.fpt.campus_expense_manager.fragments;
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/PlaceholderFragment.java
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -19,10 +23,17 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/PlaceholderFragment.java
 import vn.btec.campusexpensemanagement.R;
 import vn.btec.campusexpensemanagement.adapters.TransactionAdapter;
 import vn.btec.campusexpensemanagement.database.DatabaseHelper;
 import vn.btec.campusexpensemanagement.entities.Transaction;
+=======
+import com.btec.fpt.campus_expense_manager.R;
+import com.btec.fpt.campus_expense_manager.adapters.TransactionAdapter;
+import com.btec.fpt.campus_expense_manager.database.DatabaseHelper;
+import com.btec.fpt.campus_expense_manager.entities.Transaction;
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/PlaceholderFragment.java
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
@@ -169,7 +180,11 @@ public class PlaceholderFragment extends Fragment {
                 String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                     .format(new Date());
 
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/fragments/PlaceholderFragment.java
                 databaseHelper.addTransaction(
+=======
+                databaseHelper.insertTransaction(
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/fragments/PlaceholderFragment.java
                     amount, 
                     description, 
                     currentDate, 

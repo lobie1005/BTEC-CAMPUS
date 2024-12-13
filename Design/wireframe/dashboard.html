@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Wireframe</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #ffffff;
+        color: #000000;
+      }
+
+      header {
+        background-color: #000000;
+        color: #ffffff;
+        padding: 1rem;
+        text-align: center;
+        font-size: 1.5rem;
+      }
+
+      .container {
+        padding: 16px;
+      }
+
+      .card {
+        background: #ffffff;
+        border: 1px solid #000000;
+        border-radius: 12px;
+        margin-bottom: 16px;
+        padding: 16px;
+      }
+
+      .center {
+        text-align: center;
+      }
+
+      .balance {
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .progress-bar {
+        background-color: #f0f0f0;
+        border: 1px solid #000000;
+        border-radius: 4px;
+        height: 8px;
+        margin: 8px 0;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .progress-bar span {
+        background-color: #000000;
+        display: block;
+        height: 100%;
+        width: 65%;
+      }
+
+      .summary {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .summary .box {
+        flex: 1;
+        background-color: #f0f0f0;
+        padding: 16px;
+        border: 1px solid #000000;
+        border-radius: 8px;
+        text-align: center;
+      }
+
+      .transactions {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .transaction {
+        background: #f0f0f0;
+        padding: 8px;
+        border: 1px solid #000000;
+        border-radius: 4px;
+      }
+
+      .fab {
+        position: fixed;
+        bottom: 16px;
+        right: 16px;
+        background: #000000;
+        color: #ffffff;
+        border: none;
+        border-radius: 50%;
+        width: 56px;
+        height: 56px;
+        font-size: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+      }
+
+      .fab:hover {
+        background: #333333;
+      }
+    </style>
+  </head>
+  <body>
+    <header>Dashboard</header>
+    <div class="container">
+      <div class="card">
+        <div class="center">
+          <h2>John Doe</h2>
+          <p>Balance</p>
+          <div class="balance">$1,250.00</div>
+          <p>Budget Remaining</p>
+          <div class="progress-bar">
+            <span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="center">December 2024</p>
+        <h3>Monthly Overview</h3>
+        <div class="summary">
+          <div class="box">
+            <p>Total Income</p>
+            <strong>₫0.00</strong>
+          </div>
+          <div class="box">
+            <p>Total Expense</p>
+            <strong>$0.00</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Recent Transactions</h3>
+        <div class="transactions">
+          <div class="transaction">No recent transactions</div>
+        </div>
+      </div>
+    </div>
+    <button class="fab">+</button>
+  </body>
+</html>

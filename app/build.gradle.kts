@@ -8,7 +8,11 @@ android {
     compileSdk = 34
 
     defaultConfig {
+<<<<<<< Updated upstream
         applicationId = "vn.btec.campusexpensemanagement"
+=======
+        applicationId = "com.btec.fpt.campus_expense_manager"
+>>>>>>> Stashed changes
         minSdk = 26
 =======
     namespace = "vn.btec.campus_expense_management"
@@ -43,6 +47,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
 >>>>>>> lobi_ver
     }
+    buildToolsVersion = "34.0.0"
 }
 
 dependencies {

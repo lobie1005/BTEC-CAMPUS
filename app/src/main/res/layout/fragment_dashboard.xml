@@ -215,6 +215,10 @@
                     </LinearLayout>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+>>>>>>> origin/demo1
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -247,7 +251,11 @@
                     </LinearLayout>
 
 =======
+<<<<<<< HEAD
 >>>>>>> lobi_ver
+=======
+>>>>>>> Stashed changes
+>>>>>>> origin/demo1
                     <!-- Monthly Overview Text -->
                     <TextView
                         android:id="@+id/tvMonthlyOverview"
@@ -315,6 +323,10 @@
     </androidx.core.widget.NestedScrollView>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+>>>>>>> origin/demo1
 
 =======
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -325,5 +337,9 @@
         android:layout_margin="16dp"
         android:backgroundTint="@color/primary_blue"
         app:srcCompat="@android:drawable/ic_input_add" />
+<<<<<<< HEAD
 >>>>>>> lobi_ver
+=======
+>>>>>>> Stashed changes
+>>>>>>> origin/demo1
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

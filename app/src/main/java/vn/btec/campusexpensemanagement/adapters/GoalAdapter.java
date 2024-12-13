@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/adapters/GoalAdapter.java
 package vn.btec.campusexpensemanagement.adapters;
+=======
+package com.btec.fpt.campus_expense_manager.adapters;
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/adapters/GoalAdapter.java
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,8 +15,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+<<<<<<< Updated upstream:app/src/main/java/vn/btec/campusexpensemanagement/adapters/GoalAdapter.java
 import vn.btec.campusexpensemanagement.R;
 import vn.btec.campusexpensemanagement.entities.Goals;
+=======
+import com.btec.fpt.campus_expense_manager.R;
+import com.btec.fpt.campus_expense_manager.entities.Goals;
+>>>>>>> Stashed changes:app/src/main/java/com/btec/fpt/campus_expense_manager/adapters/GoalAdapter.java
 
 import java.text.NumberFormat;
 import java.util.List;

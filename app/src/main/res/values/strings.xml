@@ -1,5 +1,9 @@
 <resources>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+>>>>>>> origin/demo1
     <!-- App Name -->
     <string name="app_name">Campus Expense Manager</string>
 
@@ -41,6 +45,12 @@
         <item>Utilities</item>
         <item>Health</item>
         <item>Others</item>
+=======
+    <string name="app_name">Campus_Expense_Manager</string>
+    <string-array name="transaction_types">
+        <item>Income</item>
+        <item>Expense</item>
+>>>>>>> Stashed changes
     </string-array>
 =======
     <string name="app_name">Campus Expense Management</string>

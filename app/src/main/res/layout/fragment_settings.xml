@@ -1,4 +1,8 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+>>>>>>> origin/demo1
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -228,18 +232,32 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="16dp">
 
+<<<<<<< HEAD
             <ImageView
                 android:id="@+id/ivProfilePicture"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:src="@drawable/ic_profile"
                 android:background="@drawable/circular_background_primary"/>
+=======
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ivProfileAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/default_profile"
+                app:civ_border_width="2dp"
+                app:civ_border_color="@color/primary_blue"/>
+>>>>>>> origin/demo1
 
             <ImageView
                 android:id="@+id/ivEditProfilePicture"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
+<<<<<<< HEAD
                 android:src="@drawable/ic_edit"
+=======
+                android:src="@drawable/ic_edit_pencil"
+>>>>>>> origin/demo1
                 android:background="@drawable/circular_background_primary"
                 android:padding="8dp"
                 android:layout_gravity="bottom|end"/>
@@ -389,4 +407,8 @@
             app:iconGravity="textStart"/>
     </LinearLayout>
 </ScrollView>
+<<<<<<< HEAD
 >>>>>>> lobi_ver
+=======
+>>>>>>> Stashed changes
+>>>>>>> origin/demo1
