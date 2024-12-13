@@ -1,28 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< Updated upstream
->>>>>>> origin/demo1
-        android:id="@+id/nav_dashboard"
-        android:icon="@drawable/ic_dashboard"
-        android:title="Dashboard" />
 
-=======
-        android:id="@+id/fragment_transactions"
-        android:icon="@drawable/ic_transactions"
-        android:title="Transactions" />
     <item
-        android:id="@+id/fragment_data_visualization"
+        android:id="@+id/nav_dashboard"
         android:icon="@drawable/ic_chart"
-        android:title="Analytics" />
-    <item
-        android:id="@+id/fragment_dashboard"
-        android:icon="@drawable/ic_dashboard"
         android:title="Home" />
->>>>>>> Stashed changes
+
     <item
         android:id="@+id/nav_transactions"
         android:icon="@drawable/ic_transactions" 
@@ -32,36 +15,12 @@
         android:id="@+id/nav_goals"
         android:icon="@drawable/ic_goals"
         android:title="Goals" />
-<<<<<<< Updated upstream
-
     <item
         android:id="@+id/nav_reports"
         android:icon="@drawable/ic_reports"
         android:title="Reports" />
-
     <item
         android:id="@+id/nav_settings"
-=======
-<<<<<<< HEAD
-        android:id="@+id/fragment_dashboard"
-        android:icon="@drawable/ic_dashboard"
-        android:title="Dashboard" />
-    <item
-        android:id="@+id/fragment_transactions"
-        android:icon="@drawable/ic_transactions"
-        android:title="Transactions" />
-    <item
-        android:id="@+id/fragment_report"
-        android:icon="@drawable/ic_chart"
-        android:title="Reports" />
-    <item
-        android:id="@+id/fragment_settings"
->>>>>>> lobi_ver
-=======
-    <item
-        android:id="@+id/fragment_settings"
->>>>>>> Stashed changes
->>>>>>> origin/demo1
         android:icon="@drawable/ic_settings"
         android:title="Settings" />
 </menu>

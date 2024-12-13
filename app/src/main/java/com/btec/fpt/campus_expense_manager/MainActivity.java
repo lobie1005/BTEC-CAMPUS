@@ -14,12 +14,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 
+import vn.btec.campusexpensemanagement.fragments.AddExpenseFragment;
+
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private ReportFragment reportFragment;
     private DashboardFragment dashboardFragment;
     private FloatingActionButton fabAddExpense;
     private PlaceholderFragment placeholderFragment;
+    private GoalFragment goalFragment;
+    private SettingsFragment settingsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,15 +49,15 @@ public class MainActivity extends AppCompatActivity {
                 Fragment selectedFragment = null;
                 int itemId = item.getItemId();
 
-                if (itemId == R.id.fragment_dashboard) {
+                if (itemId == R.id.nav_dashboard) {
                     selectedFragment = dashboardFragment;
-                } else if (itemId == R.id.fragment_reports) {
+                } else if (itemId == R.id.nav_reports) {
                     selectedFragment = reportFragment;
-                } else if (itemId == R.id.fragment_goals) {
+                } else if (itemId == R.id.nav_goals) {
                     selectedFragment = new GoalFragment();
-                } else if (itemId == R.id.fragement_settings) {
-                    selectedFragment = new SettingsFragment();
-                } else if (itemId == R.id.fragment_transactions) {
+                } else if (itemId == R.id.nav_settings) {
+                    selectedFragment = new settingsFragment;
+                } else if (itemId == R.id.nav_transactions) {
                     selectedFragment = placeholderFragment;
                 }
 
@@ -86,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         loadFragment(reportFragment);
         
         // Set the bottom navigation to the report item
-        bottomNavigationView.setSelectedItemId(R.id.fragment_reports);
+        bottomNavigationView.setSelectedItemId(R.id.nav_reports);
         
         // Set the initial filter in the ReportFragment
         reportFragment.setInitialFilter(transactionType);
